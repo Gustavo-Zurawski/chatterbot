@@ -1,0 +1,81 @@
+version: '3'
+services:
+  api:
+    container_name: chatterbot_api
+    env_file: .env
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: >
+        bash -c "export WAIT_FOR=chatterbot_redis:6379,chatterbot_broker:5672,chatterbot_elasticsearch:9200,chatterbot_database:5432
+        && python ./wait.py
+        && python manage.py migrate
+        && uvicorn chatterbot.asgi:application --lifespan off --host 0.0.0.0 --port 8000 --interface asgi3"
+    user: nobody
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+      - broker
+      - elasticsearch
+      - redis
+    volumes:
+      - media:/media
+
+  broker:
+    container_name: chatterbot_broker
+    image: rabbitmq:3-management
+    env_file: .env
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  elasticsearch:
+    image: mdslino/elasticsearch:7.1.1
+    container_name: chatterbot_elasticsearch
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  kibana:
+    container_name: chatterbot_kibana
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    env_file: .env
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+
+  redis:
+    container_name: chatterbot_redis
+    image: redis
+    ports:
+      - 6379:6379
+
+  database:
+    container_name: chatterbot_database
+    image: postgres:12.8-alpine
+    environment:
+      POSTGRES_USER: chatterbot_user
+      POSTGRES_DB: chatterbot
+      POSTGRES_PASSWORD: password
+      TZ: America/Sao_Paulo
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  esdata01:
+    driver: local
+  postgres_data:
+  media:
