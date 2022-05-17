@@ -7,6 +7,7 @@ class Document(BaseModel):
     id = models.AutoField(primary_key=True, db_column='id_document')
     file = models.FileField(storage=secure_storage)
     name = models.CharField(max_length=100, null=True, blank=True, default=None)
+    photo = models.FileField(storage=secure_storage, null=True, blank=True, default=None)
 
     class Meta:
         verbose_name = "Documento"

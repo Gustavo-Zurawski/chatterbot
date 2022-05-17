@@ -20,6 +20,7 @@ django-filter = "==2.4.0"
 django-environ = "==0.4.5"
 pyodbc="~=4.0.32"
 django-redis = "*"
+face-recognition = "*"
 
 [dev-packages]
 

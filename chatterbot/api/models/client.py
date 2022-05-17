@@ -5,7 +5,7 @@ from chatterbot.base.storage import secure_storage
 
 class Client(BaseModel):
     name = models.CharField(max_length=200)
-    rg = models.CharField(max_length=15, default=None, null=True, blank=True)
+    rg = models.CharField(max_length=30, default=None, null=True, blank=True)
     issuing_body = models.CharField(max_length=8, default=None, null=True, blank=True)
     uf = models.CharField(max_length=3, default=None, null=True, blank=True)
     cpf = models.CharField(max_length=20, default=None, null=True, blank=True)

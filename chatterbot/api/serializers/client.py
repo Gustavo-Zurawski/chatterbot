@@ -9,3 +9,7 @@ class ClientModelSerializer(serializers.ModelSerializer):
         fields = ['id', 'created_at', 'name', 'rg', 'issuing_body', 'uf', 'cpf',
                   'birth_date', 'local', 'issuance_date', 'face_coding']
         read_only_fields = ['created_at', 'id']
+
+
+class ClientImageSerializer(serializers.Serializer):
+    image = serializers.ImageField(required=True)

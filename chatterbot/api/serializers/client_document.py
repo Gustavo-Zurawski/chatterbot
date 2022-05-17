@@ -8,7 +8,7 @@ class ClientDocumentModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Document
-        fields = ['file', 'name']
+        fields = ['file', 'name', 'photo']
         read_only_fields = ['name']
 
     def create(self, validated_data):
