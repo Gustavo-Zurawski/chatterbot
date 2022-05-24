@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'storages',
     'drf_yasg',
     'corsheaders',
+    'chatterbot.ext.django_chatterbot',
 ]
 
 PAGE_SIZE = 100
@@ -290,3 +291,12 @@ AWS_S3_ENVIRONMENT = ''
 AWS_S3_ACCESS_KEY_ID = 'AKIAWXVR3B6GXNXP3SX2'
 AWS_S3_SECRET_ACCESS_KEY = '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'
 AWS_DEFAULT_ACL = None
+
+CHATTERBOT = {
+    'name': 'Tech Support Bot',
+    'logic_adapters': [
+        'chatterbot.logic.MathematicalEvaluation',
+        'chatterbot.logic.TimeLogicAdapter',
+        'chatterbot.logic.BestMatch'
+    ]
+}

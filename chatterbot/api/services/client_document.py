@@ -6,6 +6,8 @@ import numpy
 
 from io import BytesIO
 from django.conf import settings
+from rest_framework.exceptions import APIException
+from rest_framework import status
 from chatterbot.base.service import ModelServiceMixin
 from ..models import Client
 
@@ -70,22 +72,29 @@ class ClientDocumentModelService(ModelServiceMixin):
     @classmethod
     def get_client_by_image(cls, image):
         try:
-            image = face_recognition.load_image_file(BytesIO(image))
+            image = face_recognition.load_image_file(image)
             if face_recognition.face_locations(img=image):
                 encoding_check = face_recognition.face_encodings(face_image=image)
                 client_id = cls.checked_images(encoding_check)
-                return cls.get_all().filter(id=client_id).first()
+                if client_id:
+                    return cls.get_all().filter(id=client_id).first()
+                else:
+                    raise APIException(detail='Não foi possível localizar cliente. Tente novamente!',
+                                       code=status.HTTP_400_BAD_REQUEST)
+            else:
+                raise APIException(detail='Não foi possível codificar a face. Tente novamente!',
+                                   code=status.HTTP_400_BAD_REQUEST)
         except Exception as error:
             LOG.error(f'[GET_CLIENT_BY_IMAGE] error: {error}')
-            raise NameError(error)
+            raise
 
     @classmethod
     def get_client_data_face_encoding(cls):
-        clietns = cls.get_all().filter(face_coding__isnull=False).all()
+        clients = cls.get_all().filter(face_coding__isnull=False).all()
         image_list = []
         id_list = []
-        for client in clietns:
-            image_string = client.face_coding.decode()
+        for client in clients:
+            image_string = client.face_coding
             face_encoding = numpy.fromstring(string=image_string, dtype=numpy.float, sep=' ')
             image_list.append(face_encoding)
             id_list.append(client.id)
