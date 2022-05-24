@@ -1,5 +1,5 @@
 from django.db import models
-from chatterbot.base.models import BaseModel
+from wabot.base.models import BaseModel
 
 
 class Address(BaseModel):

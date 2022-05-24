@@ -65,7 +65,7 @@ services:
     image: postgres:12.8-alpine
     environment:
       POSTGRES_USER: chatterbot_user
-      POSTGRES_DB: chatterbot
+      POSTGRES_DB: wabot
       POSTGRES_PASSWORD: password
       TZ: America/Sao_Paulo
     ports:

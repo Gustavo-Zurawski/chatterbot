@@ -1,9 +1,9 @@
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 
-from chatterbot.base.api_view import BaseModelViewSet
+from wabot.base.api_view import BaseModelViewSet
 from ..serializers.client_document import ClientDocumentModelSerializer
-from chatterbot.base.authentication import TokenAPIAuthentication
+from wabot.base.authentication import TokenAPIAuthentication
 
 
 class ClientDocumentView(BaseModelViewSet):

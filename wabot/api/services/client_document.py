@@ -8,7 +8,7 @@ from io import BytesIO
 from django.conf import settings
 from rest_framework.exceptions import APIException
 from rest_framework import status
-from chatterbot.base.service import ModelServiceMixin
+from wabot.base.service import ModelServiceMixin
 from ..models import Client
 
 

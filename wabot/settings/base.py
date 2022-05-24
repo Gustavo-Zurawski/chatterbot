@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    'chatterbot.api',
+    'wabot.api',
     'rest_framework',
     'storages',
     'drf_yasg',
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
 PAGE_SIZE = 100
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_PAGINATION_CLASS': 'chatterbot.base.api_pagination.LimitOffsetPaginationMixin',
+    'DEFAULT_PAGINATION_CLASS': 'wabot.base.api_pagination.LimitOffsetPaginationMixin',
     'PAGE_SIZE': PAGE_SIZE,
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
@@ -63,7 +63,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'chatterbot.base.authentication.TokenAPIAuthentication',
+        'wabot.base.authentication.TokenAPIAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -82,7 +82,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-ROOT_URLCONF = 'chatterbot.urls'
+ROOT_URLCONF = 'wabot.urls'
 
 TEMPLATES = [
     {
@@ -100,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'chatterbot.wsgi.application'
+WSGI_APPLICATION = 'wabot.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -110,8 +110,8 @@ DATABASE_USER = env('DATABASE_USER', default='chatterbot_user')
 DATABASE_PASSWORD = env('DATABASE_PASSWORD', default='password')
 DATABASE_HOST = env('DATABASE_HOST', default='localhost')
 DATABASE_PORT = env.int('DATABASE_PORT', default=5433)
-DATABASE_NAME = env('DATABASE_NAME', default='chatterbot')
-DATABASE_SCHEMA = env('DATABASE_SCHEMA', default='chatterbot')
+DATABASE_NAME = env('DATABASE_NAME', default='wabot')
+DATABASE_SCHEMA = env('DATABASE_SCHEMA', default='wabot')
 
 DATABASES = {
     'default': {
@@ -226,7 +226,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'cmreslogging.handlers.CMRESHandler',
             'hosts': [{'host': ELASTICSEARCH_HOST, 'port': ELASTICSEARCH_PORT}],
-            'es_index_name': 'logs-chatterbot',
+            'es_index_name': 'logs-wabot',
             'es_doc_type': None,
             'es_additional_fields': {'App': 'Chatterbot', 'Environment': ELASTICSEARCH_ENVIRONMENT},
             'use_ssl': ELASTICSEARCH_USE_SSL,
@@ -253,8 +253,8 @@ SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Bearer': {'type': 'apiKey', 'name': 'Authorization', 'in': 'header'},
     },
-    'DEFAULT_AUTO_SCHEMA_CLASS': 'chatterbot.base.CustomAutoSchema',
-    'DEFAULT_GENERATOR_CLASS': 'chatterbot.base.CustomSchemaGenerator',
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'wabot.base.CustomAutoSchema',
+    'DEFAULT_GENERATOR_CLASS': 'wabot.base.CustomSchemaGenerator',
 }
 
 REDOC_SETTINGS = {'LAZY_RENDERING': True}

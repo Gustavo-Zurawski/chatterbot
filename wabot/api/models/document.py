@@ -1,6 +1,6 @@
 from django.db import models
-from chatterbot.base.models import BaseModel
-from chatterbot.base.storage import secure_storage
+from wabot.base.models import BaseModel
+from wabot.base.storage import secure_storage
 
 
 class Document(BaseModel):

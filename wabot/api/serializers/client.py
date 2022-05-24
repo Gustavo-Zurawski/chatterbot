@@ -1,6 +1,6 @@
 from ..models import Client
 from rest_framework import serializers
-from chatterbot.api.services.client_document import ClientDocumentModelService
+from wabot.api.services.client_document import ClientDocumentModelService
 
 
 class ClientModelSerializer(serializers.ModelSerializer):
